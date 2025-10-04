@@ -1,0 +1,17 @@
+
+<h1>Data Binding start</h1>
+
+<table>
+    <tr>
+        <td></td>
+        <td>{{coursename}}</td>
+        <td>{{courseid}}</td>
+        <tr><input type="text" maxlength="maxlen" /></tr>
+        <tr><input type="text" id="sadas" [disabled]="isdisab" /></tr>
+        <tr [class]="color"><input [type]="type" id="sadas" [disabled]="isdisab" /></tr>
+</table>
+<p [class]="color">This is two way data binding</p>
+<button (click)="showcoursename()">showcoutse</button>
+<button (click)="chancoursename()">change</button>
+<input [(ngModel)]="coursename" type="text" />
+<p>{{coursename}}</p>
