@@ -14,7 +14,7 @@ export class SignalEx {
   courseid=signal<number>(20);
 
   fullinfo=computed(()=>{
-    return this.coursename()+" - "+this.courseid();
+    return this.name+" started  "+ this.coursename()+" - "+this.courseid();
   });
 
   constructor(){
