@@ -1,0 +1,44 @@
+<table class="table table-border">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody> 
+        @for(user of Userlist; track $index){
+        <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+        </tr> 
+    }  
+</table>
+<br>
+<table class="table table-border">
+    <thead>
+        <tr>
+            <th>Userid</th>
+            <th>Title</th>
+            <th>status</th>
+        </tr>
+
+    </thead>
+    <body>
+        @for(toldt of todolist; track $index){
+        <tr>
+            <td>{{toldt.userId}}</td>
+            <td>{{toldt.title}}</td>
+            <td>
+                @if(toldt.completed===true){
+                    <span class="badge bg-success">Completed</span>
+                }@else {
+                    <span class="badge bg-danger">Pending</span>
+                }
+            </td>
+        }
+    </body>
+</table>
