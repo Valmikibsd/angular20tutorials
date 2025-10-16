@@ -1,4 +1,4 @@
-<table class="table table-border">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>ID</th>
@@ -18,18 +18,20 @@
     }  
 </table>
 <br>
-<table class="table table-border">
+<table class="table table-striped">
     <thead>
         <tr>
+            <th>#</th>
             <th>Userid</th>
             <th>Title</th>
             <th>status</th>
         </tr>
 
     </thead>
-    <body>
+    <tbody>
         @for(toldt of todolist; track $index){
         <tr>
+            <td>{{$index+1}}</td>
             <td>{{toldt.userId}}</td>
             <td>{{toldt.title}}</td>
             <td>
@@ -40,5 +42,5 @@
                 }
             </td>
         }
-    </body>
+    </tbody>
 </table>
