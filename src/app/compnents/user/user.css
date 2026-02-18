@@ -1,0 +1,12 @@
+.card {
+  border: 0;
+  border-radius: 0.75rem;
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+small.text-danger {
+  line-height: 1.2;
+}

@@ -1,52 +1,106 @@
-<div class="row">
-  <div class="col-sm-6 mb-3 mb-sm-0">
-    <div class="card">
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card shadow-sm h-100">
       <div class="card-body">
-        <table class="table table-striped">
+        <h5 class="card-title mb-3">Registered Users</h5>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle mb-0">
             <thead>
+              <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Password</th>
                 <th>Actions</th>
+              </tr>
             </thead>
             <tbody>
-                @for(user of userlist;track $index){
+              @for (user of userlist; track user.userId) {
                 <tr>
-                    <td>{{user.fullName}}---{{user.userId}}</td>
-                    <td>{{user.emailId}}</td>
-                    <td>{{user.mobileNo}}</td>
-                    <td>{{user.password}}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" (click)="deleteuser(user.userId)">Delete</button>
-                        <button class="btn btn-primary btn-sm" (click)="edituser(user)">Edit</button> 
-                    </td>
-                }
+                  <td>{{ user.fullName }}</td>
+                  <td>{{ user.emailId }}</td>
+                  <td>{{ user.mobileNo }}</td>
+                  <td>{{ user.password }}</td>
+                  <td class="d-flex gap-2">
+                    <button class="btn btn-danger btn-sm" (click)="deleteuser(user.userId)">Delete</button>
+                    <button class="btn btn-primary btn-sm" (click)="edituser(user)">Edit</button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="text-center text-muted">No users found</td>
+                </tr>
+              }
             </tbody>
-        </table>
-        
+          </table>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-sm-6">
-    <div class="card">
+
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
       <div class="card-body">
-        <label>email</label>
-        <input type="email" class="form-control" [(ngModel)]="useobj.emailId" placeholder="Enter email">
-        <br>
-        <label>password</label>
-        <input type="password" class="form-control" [(ngModel)]="useobj.password" placeholder="Enter password">   
-        <br>
-        <label>name</label>
-        <input type="text" class="form-control" [(ngModel)]="useobj.fullName" placeholder="Enter name">
-        <br>
-        <label>mobile</label>
-        <input type="text" class="form-control" [(ngModel)]="useobj.mobileNo" placeholder="Enter mobile">
-        @if(useobj.userId){
-        <button class="btn btn-primary mt-3" (click)="update()">Update</button>    
-        }@else{     
-        <button class="btn btn-primary mt-3" (click)="register()">Submit</button>    
-        }
+        <h5 class="card-title mb-3">Registration Form</h5>
+
+        <form [formGroup]="registrationForm" (ngSubmit)="f.userId.value ? update() : register()" novalidate>
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" formControlName="fullName" placeholder="Enter full name" />
+          @if ((submitted || f.fullName.touched) && f.fullName.errors) {
+            <small class="text-danger d-block mt-1">Name is required (3-50 characters).</small>
+          }
+
+          <label class="form-label mt-3">Email</label>
+          <input type="email" class="form-control" formControlName="emailId" placeholder="Enter email" />
+          @if ((submitted || f.emailId.touched) && f.emailId.errors) {
+            <small class="text-danger d-block mt-1">Enter a valid email address.</small>
+          }
+
+          <label class="form-label mt-3">Mobile</label>
+          <input type="text" class="form-control" formControlName="mobileNo" placeholder="10-digit mobile number" />
+          @if ((submitted || f.mobileNo.touched) && f.mobileNo.errors) {
+            <small class="text-danger d-block mt-1">Mobile number must be exactly 10 digits.</small>
+          }
+
+          <label class="form-label mt-3">Password</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="Enter password" />
+          @if ((submitted || f.password.touched) && f.password.errors) {
+            <small class="text-danger d-block mt-1">
+              Password must have 8+ characters, uppercase, lowercase, number, and special character.
+            </small>
+          }
+
+          <label class="form-label mt-3">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="confirmPassword"
+            placeholder="Confirm password"
+          />
+          @if ((submitted || f.confirmPassword.touched) && f.confirmPassword.errors?.['required']) {
+            <small class="text-danger d-block mt-1">Confirm password is required.</small>
+          }
+          @if ((submitted || f.confirmPassword.touched) && registrationForm.errors?.['passwordMismatch']) {
+            <small class="text-danger d-block mt-1">Passwords do not match.</small>
+          }
+
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="terms" formControlName="acceptTerms" />
+            <label class="form-check-label" for="terms">I accept the terms and conditions.</label>
+          </div>
+          @if ((submitted || f.acceptTerms.touched) && f.acceptTerms.errors) {
+            <small class="text-danger d-block mt-1">You must accept terms to continue.</small>
+          }
+
+          <div class="d-flex gap-2 mt-4">
+            @if (f.userId.value) {
+              <button type="submit" class="btn btn-primary">Update User</button>
+            } @else {
+              <button type="submit" class="btn btn-success">Register User</button>
+            }
+            <button type="button" class="btn btn-outline-secondary" (click)="clear()">Reset</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
